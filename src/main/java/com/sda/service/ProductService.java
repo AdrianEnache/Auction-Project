@@ -50,4 +50,13 @@ public class ProductService {
         List<Product> productList = productRepository.findAll();
         return productMapper.map(productList);
     }
+
+    public Optional<ProductDto> getProductDtoBy(String productId) {
+        Optional<Product> optionalProduct = productRepository.findById(Integer.parseInt(productId));
+        if (!optionalProduct.isPresent()){
+            return Optional.empty();
+        }
+        ProductDto productDto = productMapper.map(optionalProduct.get());
+        return Optional.of(productDto);
+    }
 }

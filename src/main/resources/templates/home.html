@@ -69,8 +69,8 @@
                     </div>
                     <div class="card-body">
                         <p th:text="${product.category}">Accessories</p>
-                        <h4 class="card-product__title"><a href="/viewProduct" th:text="${product.name}"></a></h4>
-                        <p class="card-product__price" th:text="'$'+${product.startingPrice}">$150.00</p>
+                        <h4 class="card-product__title"><a th:href="'/viewProduct/'+${product.id}" th:text="${product.name}"></a></h4>
+                        <p class="card-product__price" th:text="'$'+${product.currentPrice}"></p>
                     </div>
                 </div>
             </div>

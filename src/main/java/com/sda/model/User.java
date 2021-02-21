@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,5 +22,6 @@ public class User {
     @ManyToOne(cascade = CascadeType.ALL)
     private Role role;
 
-
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+    private List<Bid> bidList;
 }

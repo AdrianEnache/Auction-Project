@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="/aroma-template/vendors/owl-carousel/owl.theme.default.min.css">
     <link rel="stylesheet" href="/aroma-template/vendors/owl-carousel/owl.carousel.min.css">
     <link rel="stylesheet" href="/aroma-template/css/style.css">
+    <link rel="stylesheet" href="/css/custom.css">
+
 </head>
 <body>
 <!--================ Start Header Menu Area =================-->
@@ -59,60 +61,33 @@
     <div class="container">
         <div class="row s_product_inner">
             <div class="col-lg-6">
-                <div class="owl-carousel owl-theme s_Product_carousel owl-loaded owl-drag">
-                    <div class="owl-stage-outer">
-                        <div class="owl-stage"
-                             style="transform: translate3d(-1080px, 0px, 0px); transition: all 0s ease 0s; width: 2700px;">
-                            <div class="owl-item cloned" style="width: 540px;">
-                                <div class="single-prd-item">
-                                    <img class="img-fluid" src="aroma-template/img/category/s-p1.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="owl-item cloned" style="width: 540px;">
-                                <div class="single-prd-item">
-                                    <img class="img-fluid" src="aroma-template/img/category/s-p1.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="owl-item active" style="width: 540px;">
-                                <div class="single-prd-item">
-                                    <img class="img-fluid" src="aroma-template/img/category/s-p1.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="owl-item cloned" style="width: 540px;">
-                                <div class="single-prd-item">
-                                    <img class="img-fluid" src="aroma-template/img/category/s-p1.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="owl-item cloned" style="width: 540px;">
-                                <div class="single-prd-item">
-                                    <img class="img-fluid" src="aroma-template/img/category/s-p1.jpg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div></div>
+                <img class="img-fluid main-photo" th:src="${'data:image/png;base64,'+product.base64Image}" alt="">
             </div>
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
                     <h3 th:text="${product.name}"></h3>
-                    <h2 th:text="'$'+${product.startingPrice}"></h2>
+                    <h2 th:text="'$'+${product.currentPrice}"></h2>
                     <ul class="list">
                         <li><a class="active" href="#">
                             <span>Category</span>
                             <span th:text="' : '+${product.category}"></span></a></li>
-                        <li><a href="#"><span>Availibility</span> : In Stock</a></li>
+                        <li><a href="#"><span>Starting Price</span>
+                            <span th:text="' : $'+${product.startingPrice}"></span></a></li>
                     </ul>
                     <p  th:text="${product.description}"></p>
+<!--                    <p class="error-message"-->
+<!--                       th:each="error: ${#fields.errors('generic')}"-->
+<!--                       th:text="${error}"></p>-->
                     <div class="product_count">
-                        <label for="qty">Quantity:</label>
-                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;" class="increase items-count" type="button"><i class="ti-angle-left"></i></button>
-                        <input type="text" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:" class="input-text qty">
-                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>
-                        <a class="button primary-btn" href="#">Add to Cart</a>
-                    </div>
-                    <div class="card_area d-flex align-items-center">
-                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
-                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+                        <form th:action="@{/viewProduct/{id}(id=${product.id})}" method="post" th:object="${bidDto}">
+                            <label for="qty">Your Bid value:</label>
+                            <input type="text" name="qty" id="qty" size="2" maxlength="12" class="input-text qty"
+                                   th:field="*{value}">
+                            <input class="bid-button" type="submit" value="Place Bid">
+                            <p class="error-message"
+                               th:each="error: ${#fields.errors('value')}"
+                               th:text="${error}"></p>
+                        </form>
                     </div>
                 </div>
             </div>

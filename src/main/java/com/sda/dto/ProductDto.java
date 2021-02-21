@@ -12,4 +12,7 @@ public class ProductDto {
     private String minimumBidStep;
     private String startBiddingTime;
     private String endBiddingTime;
+    private String base64Image;
+
+
 }

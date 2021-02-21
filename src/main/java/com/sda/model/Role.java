@@ -20,4 +20,7 @@ public class Role {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "role")
     private List<User> users;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "seller")
+    private List<Product> productList;
+
 }

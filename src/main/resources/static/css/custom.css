@@ -8,3 +8,17 @@
 select option{
     text-transform: capitalize;
 }
+
+.error-message{
+    padding-bottom: 5px;
+    padding-top: 5px;
+    background-color: #ffa9af;
+    border-style: solid;
+    border-width: medium;
+    color: red;
+}
+
+.fieldError{
+        border-style: solid;
+        color: red;
+}

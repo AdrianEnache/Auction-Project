@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>This is Add Product Page</title>
@@ -31,33 +32,32 @@
                 </button>
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-                        <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
-                        <li class="nav-item">
+                        <li class="nav-item active"><a class="nav-link" href="/home">Home</a></li>
+                        <li class="nav-item" sec:authorize="hasRole('PARTICIPANT')">
                             <a href="/myBids" class="nav-link">My Bids</a>
                         </li>
-                        <li class="nav-item active">
+                        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                             <a href="/addProduct" class="nav-link">Add Product</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" sec:authorize="isAnonymous()">
                             <a href="/register" class="nav-link">Register</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/logout" class="nav-link">Logout</a>
                         </li>
                     </ul>
 
-                    <ul class="nav-shop">
+                    <ul class="nav-shop" sec:authorize="isAuthenticated()">
                         <li class="nav-item"><button><i class="ti-search"></i></button></li>
                         <li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button> </li>
-                        <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li>
+                        <li>
+                            <p>Hello, <span th:text="${userHeaderDto.firstname}"></span></p>
+                        </li>
+                        <li class="nav-item"><a class="button button-header" href="/logout">Logout</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </div>
 </header>
-
-
+<!--================ End Header Menu Area =================-->
 <div class="mainContainer">
     <form th:action="@{/addProduct}" method="post" th:object="${productDto}" enctype="multipart/form-data">
         <!-- 2 column grid layout with text inputs for the first and last names -->

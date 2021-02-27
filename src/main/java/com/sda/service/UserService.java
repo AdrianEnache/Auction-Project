@@ -1,5 +1,6 @@
 package com.sda.service;
 
+import com.sda.dto.UserHeaderDto;
 import com.sda.repository.RoleRepository;
 import com.sda.repository.UserRepository;
 import com.sda.dto.UserDto;
@@ -55,5 +56,13 @@ public class UserService {
             Role role = optionalRole.get();
             user.setRole(role);
         }
+    }
+
+    public UserHeaderDto getUserHeaderDto(String loggedInUserEmail) {
+        Optional<User> optionalUser = userRepository.findByEmail(loggedInUserEmail);
+        if (optionalUser.isPresent()){
+            return userMapper.map(optionalUser.get());
+        }
+        throw new RuntimeException("Invalid user email !");
     }
 }

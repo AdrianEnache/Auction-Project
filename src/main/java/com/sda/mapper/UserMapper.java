@@ -1,6 +1,7 @@
 package com.sda.mapper;
 
 import com.sda.dto.UserDto;
+import com.sda.dto.UserHeaderDto;
 import com.sda.model.User;
 import org.springframework.stereotype.Component;
 
@@ -17,5 +18,11 @@ public class UserMapper {
         user.setDateOfBirth(LocalDate.parse(userDto.getDateOfBirth()));
         user.setPassword(userDto.getPassword());
         return user;
+    }
+
+    public UserHeaderDto map(User user) {
+        UserHeaderDto userHeaderDto = new UserHeaderDto();
+        userHeaderDto.setFirstname(user.getFirstName());
+        return userHeaderDto;
     }
 }

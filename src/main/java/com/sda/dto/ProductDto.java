@@ -12,7 +12,9 @@ public class ProductDto {
     private String startingPrice;
     private String currentPrice;
     private String minimumBidStep;
+    private String userMaximumBid;
     private String startBiddingTime;
     private String endBiddingTime;
     private String base64Image;
+    private boolean winnerAssigned;
 }

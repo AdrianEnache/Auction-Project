@@ -2,8 +2,10 @@ package com.sda.controller;
 
 import com.sda.dto.BidDto;
 import com.sda.dto.ProductDto;
+import com.sda.dto.UserHeaderDto;
 import com.sda.service.BidService;
 import com.sda.service.ProductService;
+import com.sda.service.UserService;
 import com.sda.validator.BidValidator;
 import com.sda.validator.GenericValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -23,39 +25,49 @@ import java.util.Optional;
 @Controller
 public class HomeController {
 
-    private ProductService productService;
-    private GenericValidator genericValidator;
-    private BidValidator bidValidator;
-    private BidService bidService;
+    private final ProductService productService;
+    private final GenericValidator genericValidator;
+    private final BidValidator bidValidator;
+    private final BidService bidService;
+    private final UserService userService;
 
     @Autowired
     public HomeController(ProductService productService, GenericValidator genericValidator,
-                          BidValidator bidValidator, BidService bidService) {
+                          BidValidator bidValidator, BidService bidService,UserService userService) {
         this.productService = productService;
         this.genericValidator = genericValidator;
         this.bidValidator = bidValidator;
         this.bidService = bidService;
+        this.userService = userService;
     }
 
     @GetMapping("/home")
-    public String getHomepage(Model model) {
-        List<ProductDto> productDtoList = productService.getProductDtoList();// this gives us the list of productsDto
+    public String getHomepage(Model model,Authentication authentication) {
+        List<ProductDto> productDtoList = productService.getActiveProductDtoList(authentication.getName());// this gives us the list of productsDto
         model.addAttribute("productDtoList", productDtoList);
+
+        UserHeaderDto userHeaderDto =userService.getUserHeaderDto(authentication.getName());
+        model.addAttribute("userHeaderDto",userHeaderDto);
+
         return "home";
     }
 
     @GetMapping("/viewProduct/{productId}")
-    public String getViewProduct(Model model, @PathVariable(value = "productId") String productId) {
+    public String getViewProduct(Model model, @PathVariable(value = "productId") String productId,Authentication authentication) {
         if (genericValidator.isNotPositiveInteger(productId)) {
             return "redirect:/home";
         }
-        Optional<ProductDto> optionalProductDto = productService.getProductDtoBy(productId);
+        Optional<ProductDto> optionalProductDto = productService.getProductDtoBy(productId,authentication.getName());
         if (!optionalProductDto.isPresent()) {
             return "redirect:/home";
         }
         ProductDto productDto = optionalProductDto.get();
         model.addAttribute("product", productDto);
         model.addAttribute("bidDto", new BidDto());
+
+        UserHeaderDto userHeaderDto =userService.getUserHeaderDto(authentication.getName());
+        model.addAttribute("userHeaderDto",userHeaderDto);
+
         return "viewProduct";
     }
 
@@ -64,7 +76,7 @@ public class HomeController {
                           BidDto bidDto, BindingResult bindingResult, Authentication authentication) {
         String loggedUserEmail = authentication.getName();
         bidValidator.validate(productId, bidDto, bindingResult);
-        Optional<ProductDto> optionalProductDto = productService.getProductDtoBy(productId);
+        Optional<ProductDto> optionalProductDto = productService.getProductDtoBy(productId,authentication.getName());
         if (bindingResult.hasErrors()) {
             model.addAttribute("bidDto",bidDto);
             model.addAttribute("product", optionalProductDto.get());

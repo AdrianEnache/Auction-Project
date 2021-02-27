@@ -913,6 +913,12 @@ a {
     transition: all .48s ease
 }
 
+.card-img.main-img{
+    height: 210px;
+    width: 100%;
+    border-radius: calc(.25rem - 1px)
+}
+
 .card-product__imgOverlay li {
     display: inline-block
 }
@@ -4266,7 +4272,7 @@ a {
 }
 
 .s_product_text .list li a span {
-    width: 120px;
+    width: 140px;
     display: inline-block;
     color: #555555
 }

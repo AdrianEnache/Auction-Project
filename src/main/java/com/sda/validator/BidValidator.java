@@ -30,9 +30,24 @@ public class BidValidator {
             return;
         }
         validateBidValue(bidDto, bindingResult, optionalProduct.get());
+
+    }
+
+    private boolean isBidValueNotNumber(String someNumber) {
+        try {
+            Integer.parseInt(someNumber);
+        } catch (NumberFormatException exception) {
+            return true;
+        }
+        return false;
     }
 
     private void validateBidValue(BidDto bidDto, BindingResult bindingResult, Product product) {
+        if (isBidValueNotNumber(bidDto.getValue())){
+            bindingResult.addError(new FieldError("bidDto", "value", "This field should be a number!"));
+            return;
+        }
+
         Optional<Bid> optionalMaxBid = getMaxBid(product);
         int productCurrentPrice = product.getStartingPrice();
         int bidDtoValue = Integer.parseInt(bidDto.getValue());

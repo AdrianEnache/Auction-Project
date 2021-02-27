@@ -27,6 +27,11 @@ select option{
     max-width: 300px;
 }
 
+.card-img.main-img{
+    width: 300px;
+    height: 300px;
+}
+
 .product-price-btn button, input.bid-button {
     margin: 0 auto;
     display: inline-block;

@@ -65,7 +65,7 @@
             <div th:each="product:${productDtoList}" class="col-md-6 col-lg-4 col-xl-3">
                 <div class="card text-center card-product">
                     <div class="card-product__img">
-                        <img class="card-img" th:src="${'data:image/png;base64,'+product.base64Image}" alt="">
+                        <img class="card-img main-img" th:src="${'data:image/png;base64,'+product.base64Image}" alt="">
                     </div>
                     <div class="card-body">
                         <p th:text="${product.category}">Accessories</p>

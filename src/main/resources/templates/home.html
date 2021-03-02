@@ -4,7 +4,7 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta charset="UTF-8">
-    <title>This is Home Page</title>
+    <title> Boost Auction </title>
     <link rel="stylesheet" href="/aroma-template/vendors/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/aroma-template/vendors/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="/aroma-template/vendors/themify-icons/themify-icons.css">
@@ -45,7 +45,7 @@
                         <li class="nav-item"><button><i class="ti-search"></i></button></li>
                         <li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button> </li>
                         <li>
-                            <p>Hello, <span th:text="${userHeaderDto.firstname}"></span></p>
+                            <p>Hello, <span th:text="${userHeaderDto.getFirstName}"></span></p>
                         </li>
                         <li class="nav-item"><a class="button button-header" href="/logout">Logout</a></li>
                     </ul>

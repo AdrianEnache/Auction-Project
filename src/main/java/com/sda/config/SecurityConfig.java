@@ -25,13 +25,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/register").permitAll()
-                .antMatchers("/static/css/**").permitAll()
+                .antMatchers("/images/**").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/static/js/**").permitAll()
                 .antMatchers("/aroma-template/**").permitAll()
                 .antMatchers("/addProduct").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/home") //will direct you to home if login is successful
+                .loginPage("/login")
+                .permitAll()
+                .defaultSuccessUrl("/home") // will redirect to home page after login
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

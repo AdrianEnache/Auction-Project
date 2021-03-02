@@ -27,10 +27,16 @@ public class RegisterController {
 
     @GetMapping("/register")
     public String getRegisterPage(Model model) {
-        System.out.println("se apeleaza getRegister");
         model.addAttribute("userDto", new UserDto());
         return "register";
     }
+
+
+    @GetMapping("/login")
+    public String getLoginPage(){
+        return "login";
+    }
+
 
     @PostMapping("/register")
     public String postRegisterPage(Model model, UserDto userDto, BindingResult bindingResult) {

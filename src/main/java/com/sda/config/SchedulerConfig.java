@@ -19,7 +19,7 @@ public class SchedulerConfig {
         this.bidService = bidService;
     }
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 50000)
     public void regularJob(){
         System.out.println("Running job at " + LocalDateTime.now());
         bidService.assigneWinners();

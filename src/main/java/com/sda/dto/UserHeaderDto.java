@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class UserHeaderDto {
 
-    private String firstname;
+    private String firstName;
 }

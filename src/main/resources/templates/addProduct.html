@@ -1,10 +1,10 @@
 <!DOCTYPE html>
+<!--Thymeleaf activated-->
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>This is Add Product Page</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Add Product Page</title>
     <link rel="stylesheet" href="/aroma-template/vendors/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/aroma-template/vendors/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="/aroma-template/vendors/themify-icons/themify-icons.css">
@@ -13,18 +13,17 @@
     <link rel="stylesheet" href="/aroma-template/vendors/owl-carousel/owl.theme.default.min.css">
     <link rel="stylesheet" href="/aroma-template/vendors/owl-carousel/owl.carousel.min.css">
     <link rel="stylesheet" href="/aroma-template/css/style.css">
-    <link rel="stylesheet" href="/css/custom.css">
-
+    <link rel="stylesheet" href="css/custom.css">
 </head>
 <body>
-
 <!--================ Start Header Menu Area =================-->
 <header class="header_area">
     <div class="main_menu">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
                 <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -32,23 +31,20 @@
                 </button>
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-                        <li class="nav-item active"><a class="nav-link" href="/home">Home</a></li>
-                        <li class="nav-item" sec:authorize="hasRole('PARTICIPANT')">
-                            <a href="/myBids" class="nav-link">My Bids</a>
+                        <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
+                        <li class="nav-item" sec:authorize="hasRole('PARTICIPANT')"><a href="/myBids" class="nav-link">My
+                            Bids</a></li>
+                        <li class="nav-item active" sec:authorize="hasRole('ADMIN')"><a href="/addProduct"
+                                                                                        class="nav-link">Add Product</a>
                         </li>
-                        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-                            <a href="/addProduct" class="nav-link">Add Product</a>
-                        </li>
-                        <li class="nav-item" sec:authorize="isAnonymous()">
-                            <a href="/register" class="nav-link">Register</a>
-                        </li>
+                        <li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link"
+                                                                              href="/register">Register</a></li>
                     </ul>
-
                     <ul class="nav-shop" sec:authorize="isAuthenticated()">
-                        <li class="nav-item"><button><i class="ti-search"></i></button></li>
-                        <li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button> </li>
                         <li>
-                            <p>Hello, <span th:text="${userHeaderDto.firstname}"></span></p>
+                            <p>Hello,
+                                <span th:text="${userHeaderDto.firstName}"></span>
+                            </p>
                         </li>
                         <li class="nav-item"><a class="button button-header" href="/logout">Logout</a></li>
                     </ul>
@@ -60,84 +56,82 @@
 <!--================ End Header Menu Area =================-->
 <div class="mainContainer">
     <form th:action="@{/addProduct}" method="post" th:object="${productDto}" enctype="multipart/form-data">
-        <!-- 2 column grid layout with text inputs for the first and last names -->
+        <!-- Name -->
         <div class="form-outline mb-4">
             <label class="form-label" for="name">Name</label>
-            <input type="text" id="name" class="form-control" th:field="*{name}" th:errorclass="fieldError"/>
-                        <p class="error-message"
-                           th:each="error: ${#fields.errors('name')}"
-                           th:text="${error}"></p>
-        </div>
-        <div class="form-outline mb-4">
-            <label class="form-label" for="description">Description</label>
-            <textarea type="text" id="description" class="form-control" th:field="*{description}" th:errorclass="fieldError"></textarea>
+            <input type="text" id="name" class="form-control" th:field="*{name}" th:errorclass="form-field-error"/>
             <p class="error-message"
-               th:each="error: ${#fields.errors('description')}"
+               th:each="error: ${#fields.errors('name')}"
                th:text="${error}"></p>
         </div>
-        <!-- Category input -->
+        <!-- Category -->
         <div class="form-outline mb-4">
-            <label class="form-label" for="category">Category</label>
+            <option value="">Please choose...</option>
             <select id="category" class="form-control" th:field="*{category}">
-                <option value="">Please choose...</option>
                 <option th:each="category : ${T(com.sda.model.ProductCategory).values()}"
                         th:value="${category}"
                         th:text="${#strings.toLowerCase(category)}">
                 </option>
             </select>
-                        <p class="error-message"
-                           th:each="error: ${#fields.errors('category')}"
-                           th:text="${error}"></p>
+            <p class="error-message"
+               th:each="error: ${#fields.errors('category')}"
+               th:text="${error}"></p>
         </div>
-
-        <!-- Starting Price input -->
+        <!-- Description -->
         <div class="form-outline mb-4">
-            <label class="form-label" for="startingPrice">Starting Price</label>
-            <input type="number" id="startingPrice" class="form-control" th:field="*{startingPrice}" th:errorclass="fieldError" />
+            <div class="form-outline">
+                <label class="form-label" for="description">Description</label>
+                <textarea type="text" id="description" class="form-control" th:field="*{description}"
+                          th:errorclass="form-field-error"></textarea>
+                <p class="error-message"
+                   th:each="error: ${#fields.errors('description')}"
+                   th:text="${error}"></p>
+            </div>
+        </div>
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+            <label class="form-label" for="startingPrice">Starting Bid</label>
+            <input type="number" id="startingPrice" class="form-control" th:field="*{startingPrice}"
+                   th:errorclass="form-field-error"/>
             <p class="error-message"
                th:each="error: ${#fields.errors('startingPrice')}"
                th:text="${error}"></p>
         </div>
-
-        <!-- Starting Price input -->
+        <!-- Minimum Bid Step input -->
         <div class="form-outline mb-4">
             <label class="form-label" for="minimumBidStep">Minimum Bid Step</label>
-            <input type="number" id="minimumBidStep" class="form-control" th:field="*{minimumBidStep}" th:errorclass="fieldError"/>
+            <input type="number" id="minimumBidStep" class="form-control" th:field="*{minimumBidStep}"
+                   th:errorclass="form-field-error"/>
             <p class="error-message"
                th:each="error: ${#fields.errors('minimumBidStep')}"
                th:text="${error}"></p>
         </div>
-
-        <!-- start Bidding Time input -->
+        <!-- Start Bidding Time input -->
         <div class="form-outline mb-4">
             <label class="form-label" for="startBiddingTime">Start Bidding Time</label>
-            <input type="datetime-local" id="startBiddingTime" class="form-control" th:field="*{startBiddingTime}" th:errorclass="fieldError"/>
+            <input type="datetime-local" id="startBiddingTime" class="form-control" th:field="*{startBiddingTime}"
+                   th:errorclass="form-field-error"/>
             <p class="error-message"
                th:each="error: ${#fields.errors('startBiddingTime')}"
                th:text="${error}"></p>
         </div>
-
         <!-- End Bidding Time input -->
         <div class="form-outline mb-4">
             <label class="form-label" for="endBiddingTime">End Bidding Time</label>
-            <input type="datetime-local" id="endBiddingTime" class="form-control" th:field="*{endBiddingTime}" th:errorclass="fieldError"/>
+            <input type="datetime-local" id="endBiddingTime" class="form-control" th:field="*{endBiddingTime}"
+                   th:errorclass="form-field-error"/>
             <p class="error-message"
                th:each="error: ${#fields.errors('endBiddingTime')}"
                th:text="${error}"></p>
         </div>
-
         <!-- Image input -->
         <div class="form-outline mb-4">
-
             <label class="form-label" for="image">Image</label>
             <input type="file" id="image" name="image" class="form-control"/>
         </div>
-
         <!-- Submit button -->
         <button type="submit" class="btn btn-primary btn-block mb-4">Add Product</button>
-
     </form>
 </div>
-
 </body>
 </html>

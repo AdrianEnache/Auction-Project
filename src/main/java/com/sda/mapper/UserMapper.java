@@ -22,7 +22,7 @@ public class UserMapper {
 
     public UserHeaderDto map(User user) {
         UserHeaderDto userHeaderDto = new UserHeaderDto();
-        userHeaderDto.setFirstname(user.getFirstName());
+        userHeaderDto.setFirstName(user.getFirstName());
         return userHeaderDto;
     }
 }

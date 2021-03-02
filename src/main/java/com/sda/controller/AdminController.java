@@ -5,6 +5,7 @@ import com.sda.dto.UserHeaderDto;
 import com.sda.service.ProductService;
 import com.sda.service.UserService;
 import com.sda.validator.ProductDtoValidator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -15,12 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+@Slf4j
 @Controller
 public class AdminController {
 
-    private ProductDtoValidator productDtoValidator;
-    private ProductService productService;
-    private UserService userService;
+    private final ProductDtoValidator productDtoValidator;
+    private final ProductService productService;
+    private final UserService userService;
 
     @Autowired
     public AdminController(ProductDtoValidator productDtoValidator,ProductService productService,UserService userService) {
@@ -35,7 +37,6 @@ public class AdminController {
 
         UserHeaderDto userHeaderDto =userService.getUserHeaderDto(authentication.getName());
         model.addAttribute("userHeaderDto",userHeaderDto);
-
         return "addProduct";
     }
 
@@ -43,12 +44,14 @@ public class AdminController {
     public String postAddProduct(Model model, ProductDto productDto, BindingResult bindingResult,
                                  Authentication authentication,@RequestParam("image") MultipartFile multipartFile){
         String loggedUserEmail = authentication.getName();
-        System.out.println(loggedUserEmail);
+        UserHeaderDto userHeaderDto = userService.getUserHeaderDto(loggedUserEmail);
         productDtoValidator.validate(productDto,bindingResult);
         if (bindingResult.hasErrors()){
             model.addAttribute("productDto",productDto);
+            model.addAttribute("userHeaderDto",userHeaderDto);
             return "addProduct";
         }
+        log.info("product Added");
         productService.addProduct(productDto,loggedUserEmail,multipartFile);
         return "redirect:/addProduct";
     }

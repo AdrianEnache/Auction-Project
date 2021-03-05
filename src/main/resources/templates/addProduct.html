@@ -58,11 +58,13 @@
     <form th:action="@{/addProduct}" method="post" th:object="${productDto}" enctype="multipart/form-data">
         <!-- Name -->
         <div class="form-outline mb-4">
+            <div class="form-outline">
             <label class="form-label" for="name">Name</label>
             <input type="text" id="name" class="form-control" th:field="*{name}" th:errorclass="form-field-error"/>
             <p class="error-message"
                th:each="error: ${#fields.errors('name')}"
                th:text="${error}"></p>
+            </div>
         </div>
         <!-- Category -->
         <div class="form-outline mb-4">

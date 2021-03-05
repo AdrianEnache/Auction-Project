@@ -5,27 +5,17 @@
     <title>Title</title>
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="/aroma-template/vendors/fontawesome/css/all.min.css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/custom.css">
-    <script type="text/javascript" src="/static/js/toggle_Password.js"></script>
+<!--    <link rel="stylesheet" href="/aroma-template/vendors/bootstrap/bootstrap.min.css">-->
+    <link rel="stylesheet" href="/aroma-template/vendors/fontawesome/css/all.min.css">
+<!--    <link rel="stylesheet" href="/aroma-template/vendors/themify-icons/themify-icons.css">-->
+<!--    <link rel="stylesheet" href="/aroma-template/vendors/linericon/style.css">-->
+<!--    <link rel="stylesheet" href="/aroma-template/vendors/nice-select/nice-select.css">-->
+<!--    <link rel="stylesheet" href="/aroma-template/vendors/owl-carousel/owl.theme.default.min.css">-->
+<!--    <link rel="stylesheet" href="/aroma-template/vendors/owl-carousel/owl.carousel.min.css">-->
 
-    <script>
-        function togglePW(){
-
-//toggle password visibility
-            document.querySelector('.eye').classList.toggle('slash');
-
-//show/hide the password
-            var password = document.querySelector('[name=password]');
-            if(password.getAttribute('type') === 'password'){
-                password.setAttribute('type', 'text');
-            } else {
-                password.setAttribute('type', 'password');
-            }
-        }
-    </script>
 
 </head>
 <body>
@@ -35,53 +25,41 @@
 
         <!-- Icon -->
         <div class="fadeIn first">
-            <img src="../static/images/logo_boost_auction.png" th:src="@{images/logo_boost_auction.png}"
+            <img th:src="@{images/logo_boost_auctions.png}" class="img-responsive center-block"
                  id="icon" alt="User Icon"/>
         </div>
 
         <!-- Login Form -->
         <form th:action="@{/login}" method="post">
             <div class="user-show-card">
-                <i class="fadeIn fas fa-user user-show"></i>
-            <input type="text" id="login" class="fadeIn second" name="username" placeholder="login">
+                <input type="text" id="login" class="fadeIn second" name="username" placeholder="login">
+                <span><i class="fadeIn fas fa-user user-show"></i></span>
             </div>
 
             <div class="password-show-card">
-                <i class="fadeIn fas fa-eye password-show"></i>
-            <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" >
-
-<!--                <i class="fas fa-eye-slash"></i>-->
+                <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+                <span><i class="fadeIn fas fa-eye password-show"
+                         aria-hidden="true"></i></span>
+                <!--               <i class="fas fa-eye-slash"></i>-->
             </div>
+
+
             <input type="submit" class="fadeIn fourth" value="Log In">
         </form>
 
         <!-- Remember Acount and  Register -->
         <div id="formFooter">
-            <label for="remember-me" class="text-info"><span>Remember me</span>
-                <input id="remember-me" name="remember-me" type="checkbox"></label><br>
+            <label>
+                <input name="remember_me" id="remember_me" type="checkbox" value="Remember Me"> Remember me
+            </label><br>
             <a class="underlineHover" th:href="@{/register}">Register</a>
+
         </div>
 
     </div>
 </div>
 
-    <script src="js/jquery-latest.min.js"></script>
-    <script>
-        $(function (){
-            $(".password-show").click(function (event){
-                $(this).toggleClass('fa-eye-slash');
-                var x = $("#password").attr("type");
-                if (x == "password")
-                {
-                    $("#password").attr("type","text");
-                }
-                else
-                {
-                    $("#password").attr("type","password");
-                }
-            });
-        })
-    </script>
 
+<script type="text/javascript" src="js/toggle_Password.js"></script>
 </body>
 </html>

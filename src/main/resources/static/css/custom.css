@@ -3,6 +3,7 @@
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
+    text-align: left;
 }
 
 select option{
@@ -10,15 +11,17 @@ select option{
 }
 
 .error-message{
+    background: #ff726f !important;
+    color: white;
+    padding: 10px !important;
+    border-radius: 6px !important;
     position: relative;
-    background: #C03737;
-    border: 1px solid #830303;
-    width: 100px;
-    height: 40px;
-    border-radius: 5px;
+    display: inline-block !important;
+    box-shadow: 1px 1px 1px #aaaaaa;
+    margin-top: 5px;
 }
 
-.error-message:after{
+.error-message:before{
     content: '';
     width: 0;
     height: 0;
@@ -68,12 +71,22 @@ select option{
 /* BASIC */
 
 html {
-    background-color: #56baed;
+    /*background-color: #fff;*/
 }
 
 body {
     font-family: "Poppins", sans-serif;
     height: 100vh;
+    background-image:url('../images/background-image4.jpg') ;
+    background-repeat: no-repeat;
+    background-position: center;
+    /*background-position: fix;*/
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+
 }
 
 a {
@@ -129,6 +142,7 @@ h2 {
     text-align: center;
     -webkit-border-radius: 0 0 10px 10px;
     border-radius: 0 0 10px 10px;
+    color: #3185ca;
 }
 
 
@@ -149,7 +163,7 @@ h2.active {
 /* FORM TYPOGRAPHY*/
 
 input[type=button], input[type=submit], input[type=reset]  {
-    background-color: #56baed;
+    background-color: #3185ca;
     border: none;
     color: white;
     padding: 15px 80px;
@@ -210,19 +224,21 @@ input[type=text]:focus, input[type=password]:focus {
 }
 
  .password-show{
-    position: absolute;
-    top: 123px;
-    right: 19px;
-    cursor: pointer;
-    color: #56baed;
+     position: absolute;
+     top: 219px;
+     right: 54px;
+     font-size: large;
+     cursor: pointer;
+     color: #3185ca;
 }
 
  .user-show{
     position: absolute;
-    top: 54px;
-    right: 21px;
+    top: 147px;
+    right: 57px;
+     font-size: large;
     cursor: pointer;
-    color: #56baed;
+    color: #3185ca;
 }
 
 input[type=text]::placeholder, input[type=password]::placeholder {
@@ -335,13 +351,13 @@ input[type=text]::placeholder, input[type=password]::placeholder {
     bottom: -10px;
     width: 0;
     height: 2px;
-    background-color: #56baed;
+    background-color: #3185ca;
     content: "";
     transition: width 0.2s;
 }
 
 .underlineHover:hover {
-    color: #0d0d0d;
+    color: #3185ca;
 }
 
 .underlineHover:hover:after{
@@ -357,7 +373,9 @@ input[type=text]::placeholder, input[type=password]::placeholder {
 }
 
 #icon {
-    width:60%;
+    width: 40%;
+    padding-bottom: 20px;
+    margin-top: 20px;
 }
 
 .formContent i{

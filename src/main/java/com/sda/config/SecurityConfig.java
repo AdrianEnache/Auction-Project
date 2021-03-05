@@ -10,38 +10,52 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserDetailsSecurityService userDetailsSecurityService;
+    private final UserDetailsSecurityService userDetailsSecurityService;
+
+//    private final DataSource dataSource;
 
     @Autowired
     public SecurityConfig(UserDetailsSecurityService userDetailsSecurityService){
         this.userDetailsSecurityService = userDetailsSecurityService;
+//        this.dataSource = dataSource;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/register").permitAll()
-                .antMatchers("/images/**").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/css/**").permitAll()
-                .antMatchers("/static/js/**").permitAll()
-                .antMatchers("/aroma-template/**").permitAll()
-                .antMatchers("/addProduct").hasRole("ADMIN")
-                .anyRequest().authenticated()
-                .and()
+        http.authorizeRequests()
+                    .antMatchers("/register").permitAll()
+                    .antMatchers("/images/**").permitAll()
+                    .antMatchers("/login").permitAll()
+                    .antMatchers("/css/**").permitAll()
+                    .antMatchers("/js/**").permitAll()
+                    .antMatchers("/aroma-template/**").permitAll()
+                    .antMatchers("/addProduct").hasRole("ADMIN")
+                    .anyRequest().authenticated()
+                    .and()
                 .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .defaultSuccessUrl("/home") // will redirect to home page after login
-                .and()
+                    .loginPage("/login")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
+                    .permitAll()
+                    .defaultSuccessUrl("/home") // will redirect to home page after login
+                    .and()
+                .rememberMe()
+                    .key("test")
+//                    .rememberMeCookieName("remember-me-cookie")
+                    .rememberMeParameter("remember_me")  // remember-me field name in form.
+//                    .tokenRepository(this.persistentTokenRepository())
+//                    .tokenValiditySeconds(1*24*60*60)
+                  .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login")
-                .permitAll();
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/login")
+                    .deleteCookies("JSESSIONID");
+//                .permitAll()
+
     }
 
     @Bean
@@ -52,4 +66,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void globalConfig(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(userDetailsSecurityService).passwordEncoder(bCryptPasswordEncoder());
     }
+
+//    @Bean
+//    public PersistentTokenRepository persistentTokenRepository() {
+//        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+//        db.setDataSource(dataSource);
+//
+//        return db;
+//    }
+
 }

@@ -19,9 +19,9 @@ import java.util.Optional;
 public class ProductService {
 
     //== fields ==
-    private UserRepository userRepository;
-    private ProductRepository productRepository;
-    private ProductMapper productMapper;
+    private final UserRepository userRepository;
+    private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
     @Autowired
     public ProductService(UserRepository userRepository, ProductRepository productRepository, ProductMapper productMapper) {
@@ -34,6 +34,7 @@ public class ProductService {
         Product product = productMapper.map(productDto,multipartFile);
         assignSeller(loggedUserEmail, product);
         productRepository.save(product);
+        //todo - de pus validare pe description sa nu fie prea lunga - pica
     }
 
 
@@ -71,6 +72,10 @@ public class ProductService {
         return Optional.of(productDto);
     }
 
+    public List<ProductDto> search(String keyword,String authenticatedUserEmail){
+        List<Product> searchProducts = productRepository.search(keyword);
+        return productMapper.map(searchProducts,authenticatedUserEmail);
+    }
 
 
 }

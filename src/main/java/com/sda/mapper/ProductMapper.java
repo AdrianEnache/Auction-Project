@@ -36,11 +36,11 @@ public class ProductMapper {
         return product;
     }
 
+
     public List<ProductDto> map(List<Product> productList,String authenticatedUserEmail) {
         List<ProductDto> productDtoList = new ArrayList<>();
         for (Product product : productList) {
             ProductDto productDto = map(product,authenticatedUserEmail);
-//            productDto.setImage(product.getImage().toString());
             productDtoList.add(productDto);
         }
 
@@ -92,4 +92,6 @@ public class ProductMapper {
         }
         return product.getStartingPrice().toString();
     }
+
+
 }

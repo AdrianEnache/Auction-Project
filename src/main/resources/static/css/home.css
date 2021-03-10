@@ -1,0 +1,54 @@
+
+/*Search Bar*/
+
+.mb-4.bar{
+    margin-bottom: 0.5rem!important;
+    margin-top: 1rem!important;
+}
+
+#search{
+    width: 500px;
+}
+
+.fa-search{
+    color: blue!important;
+}
+
+/*LOGO*/
+
+.logo{
+    width: 55px!important;
+    height: auto!important;
+    margin-left: 386px!important;
+}
+
+.ml-auto.menu{
+    margin-left: 10px!important;
+}
+
+.ml-auto.menu{
+    margin-right: -56px!important;
+}
+
+
+/*Card Products*/
+
+.card-product{
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px 8px #888888;
+}
+
+/*Header*/
+
+.section-margin.calc-60px{
+    padding-top: 207px;
+    padding-bottom: 40px;
+    margin: 0 auto;
+    background-color: #e9ebee;
+}
+
+.header_area{
+    position: fixed;
+    background: white;
+}

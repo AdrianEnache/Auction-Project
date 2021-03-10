@@ -7,14 +7,8 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/css/custom.css">
-<!--    <link rel="stylesheet" href="/aroma-template/vendors/bootstrap/bootstrap.min.css">-->
+    <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/aroma-template/vendors/fontawesome/css/all.min.css">
-<!--    <link rel="stylesheet" href="/aroma-template/vendors/themify-icons/themify-icons.css">-->
-<!--    <link rel="stylesheet" href="/aroma-template/vendors/linericon/style.css">-->
-<!--    <link rel="stylesheet" href="/aroma-template/vendors/nice-select/nice-select.css">-->
-<!--    <link rel="stylesheet" href="/aroma-template/vendors/owl-carousel/owl.theme.default.min.css">-->
-<!--    <link rel="stylesheet" href="/aroma-template/vendors/owl-carousel/owl.carousel.min.css">-->
 
 
 </head>
@@ -24,7 +18,7 @@
         <!-- Tabs Titles -->
 
         <!-- Icon -->
-        <div class="fadeIn first">
+        <div class="fadeIn first" id="box-icon">
             <img th:src="@{images/logo_boost_auctions.png}" class="img-responsive center-block"
                  id="icon" alt="User Icon"/>
         </div>
@@ -40,7 +34,6 @@
                 <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
                 <span><i class="fadeIn fas fa-eye password-show"
                          aria-hidden="true"></i></span>
-                <!--               <i class="fas fa-eye-slash"></i>-->
             </div>
 
 
@@ -48,7 +41,7 @@
         </form>
 
         <!-- Remember Acount and  Register -->
-        <div id="formFooter">
+        <div id="formFooter" class="fadeIn fifth">
             <label>
                 <input name="remember_me" id="remember_me" type="checkbox" value="Remember Me"> Remember me
             </label><br>

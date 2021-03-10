@@ -2,16 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" class="pageClass">
 <head>
-    <title>View Product</title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta charset="UTF-8">
+    <title> Search Result </title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/aroma-template/vendors/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/aroma-template/vendors/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="/aroma-template/vendors/themify-icons/themify-icons.css">
@@ -21,7 +18,11 @@
     <link rel="stylesheet" href="/aroma-template/vendors/owl-carousel/owl.carousel.min.css">
     <link rel="stylesheet" href="/aroma-template/css/style.css">
     <link rel="stylesheet" href="/css/home.css">
-    <link rel="stylesheet" href="/css/viewProduct.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/jquery-3.3.1.slim.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 </head>
 <body>
@@ -29,14 +30,14 @@
 <header class="header_area">
     <div class="main_menu">
         <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand " th:href="@{/home}"><img th:src="@{/images/logo_simple.png}" alt="User Icon" class="logo"></a>
+            <a class="navbar-brand " th:href="@{/home}"><img th:src="@{images/logo_simple.png}" alt="User Icon" class="logo"></a>
             <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                 <ul class="nav navbar-nav menu_nav ml-auto mr-auto menu">
-                    <li class="nav-item "><a class="nav-link" href="/home">Home</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="/home">Home</a></li>
                     <li class="nav-item" sec:authorize="hasRole('PARTICIPANT')">
                         <a href="/myBids" class="nav-link">My Bids</a>
                     </li>
-                    <li class="nav-item active" sec:authorize="hasRole('ADMIN')">
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                         <a href="/addProduct" class="nav-link">Add Product</a>
                     </li>
                     <li class="nav-item" sec:authorize="isAnonymous()">
@@ -66,57 +67,31 @@
             </div>
         </nav>
     </div>
+
 </header>
 <!--================ End Header Menu Area =================-->
-
-<div class="product_image_area">
+<section class="section-margin calc-60px">
     <div class="container">
-        <div class="row s_product_inner">
-            <div class="col-lg-6">
-                <img class="img-fluid main-photo" th:src="${'data:image/png;base64,'+product.base64Image}" alt="">
-            </div>
-            <div class="col-lg-5 offset-lg-1">
-                <div class="s_product_text">
-                    <h3 th:text="${product.name}"></h3>
-                    <h2 th:text="'Current price $'+${product.currentPrice}"></h2>
-                    <ul class="list">
-                        <li><a class="active" href="#">
-                            <span>Category</span>
-                            <span th:text="' : '+${product.category}"></span></a></li>
-                        <li><a href="#"><span>Starting Price</span>
-                            <span th:text="' : $'+${product.startingPrice}"></span></a></li>
-                        <li><a href="#"><span>Auction ends at</span>
-                            <span th:text="' : '+${product.endBiddingTime}"></span></a></li>
-                        <li sec:authorize="hasRole('PARTICIPANT')"><a href="#"><span>Your maximum bid</span>
-                            <span th:text="' : $'+${product.userMaximumBid}"></span></a></li>
-                    </ul>
-                    <p th:text="${product.description}"></p>
-                    <!--                    <p class="error-message"-->
-                    <!--                       th:each="error: ${#fields.errors('generic')}"-->
-                    <!--                       th:text="${error}"></p>-->
-                    <div class="product_count"
-                         th:if="${product.userMaximumBid != product.currentPrice && !product.winnerAssigned}">
-                        <form th:action="@{/viewProduct/{id}(id=${product.id})}" method="post" th:object="${bidDto}" sec:authorize="hasRole('PARTICIPANT')">
-                            <label for="qty">Your Bid value:</label>
-                            <input type="text" id="qty" size="2" maxlength="12" class="input-text qty"
-                                   th:field="*{value}" >
-                            <input class="bid-button" type="submit" value="Place Bid" >
-                            <p class="error-message"
-                               th:each="error: ${#fields.errors('value')}"
-                               th:text="${error}"></p>
-                        </form>
+        <div class="section-intro pb-60px">
+            <h2 th:text="'Search Result for '+ ${keyword}"></span></h2>
+        </div>
+        <div class="row">
+            <!-- we need to generate div as this for each product from our DB-->
+            <div th:each="product:${searchResult}" class="col-md-6 col-lg-4 col-xl-3">
+                <div class="card text-center card-product">
+                    <div class="card-product__img">
+                        <img class="card-img main-img" th:src="${'data:image/png;base64,'+product.base64Image}" alt="">
                     </div>
-                    <div class="product_count"
-                         th:if="${product.userMaximumBid == product.currentPrice && !product.winnerAssigned}">
-                        <p>You are currently winning the auction for this product.</p>
-                    </div>
-                    <div class="product_count" th:if="${product.winnerAssigned}">
-                        <p>The auction for this product is over!</p>
+                    <div class="card-body">
+                        <p th:text="${product.category}">Accessories</p>
+                        <h4 class="card-product__title"><a th:href="'/viewProduct/'+${product.id}"
+                                                           th:text="${product.name}"></a></h4>
+                        <p class="card-product__price" th:text="'$'+${product.currentPrice}"></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 </body>
 </html>

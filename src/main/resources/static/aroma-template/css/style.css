@@ -417,7 +417,8 @@ a {
 }
 
 .nav-shop li button {
-    padding: 0;
+    padding-left: 15px;
+    padding-right: 15px;
     border: 0;
     background: transparent;
     position: relative

@@ -19,10 +19,10 @@ import java.util.Optional;
 @Service
 public class BidService {
 
-    private BidRepository bidRepository;
-    private ProductRepository productRepository;
-    private UserRepository userRepository;
-    private BidMapper bidMapper;
+    private final BidRepository bidRepository;
+    private final ProductRepository productRepository;
+    private final UserRepository userRepository;
+    private final BidMapper bidMapper;
 
     @Autowired
     public BidService(BidRepository bidRepository, ProductRepository productRepository,

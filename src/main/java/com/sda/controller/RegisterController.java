@@ -4,7 +4,6 @@ import com.sda.dto.UserDto;
 import com.sda.service.UserService;
 import com.sda.validator.UserDtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class RegisterController {
 
-    private UserService userService;
-    private UserDtoValidator userDtoValidator;
+    private final UserService userService;
+    private final UserDtoValidator userDtoValidator;
 
 
     @Autowired
@@ -23,6 +22,7 @@ public class RegisterController {
         this.userService = userService;
         this.userDtoValidator = userDtoValidator;
     }
+
 
 
     @GetMapping("/register")

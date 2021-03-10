@@ -10,6 +10,7 @@ import com.sda.validator.BidValidator;
 import com.sda.validator.GenericValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,11 +46,19 @@ public class HomeController {
     public String getHomepage(Model model,Authentication authentication) {
         List<ProductDto> productDtoList = productService.getActiveProductDtoList(authentication.getName());// this gives us the list of productsDto
         model.addAttribute("productDtoList", productDtoList);
-
         UserHeaderDto userHeaderDto =userService.getUserHeaderDto(authentication.getName());
         model.addAttribute("userHeaderDto",userHeaderDto);
-
         return "home";
+    }
+
+    @GetMapping("/search")
+    public String searchProduct(Model model, @Param("keyword") String keyword,Authentication authentication){
+        model.addAttribute("keyword",keyword);
+        List<ProductDto> searchedProductDtoList = productService.search(keyword, authentication.getName());
+        UserHeaderDto userHeaderDto =userService.getUserHeaderDto(authentication.getName());
+        model.addAttribute("searchResult",searchedProductDtoList);
+        model.addAttribute("userHeaderDto",userHeaderDto);
+        return "search_result";
     }
 
     @GetMapping("/viewProduct/{productId}")

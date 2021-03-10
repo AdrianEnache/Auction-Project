@@ -91,16 +91,16 @@
                             <span th:text="' : $'+${product.userMaximumBid}"></span></a></li>
                     </ul>
                     <p th:text="${product.description}"></p>
-                    <!--                    <p class="error-message"-->
-                    <!--                       th:each="error: ${#fields.errors('generic')}"-->
-                    <!--                       th:text="${error}"></p>-->
+<!--                                        <p class="error-message"-->
+<!--                                           th:each="error: ${#fields.errors('generic')}"-->
+<!--                                           th:text="${error}"></p>-->
                     <div class="product_count"
                          th:if="${product.userMaximumBid != product.currentPrice && !product.winnerAssigned}">
                         <form th:action="@{/viewProduct/{id}(id=${product.id})}" method="post" th:object="${bidDto}" sec:authorize="hasRole('PARTICIPANT')">
                             <label for="qty">Your Bid value:</label>
                             <input type="text" id="qty" size="2" maxlength="12" class="input-text qty"
                                    th:field="*{value}" >
-                            <input class="bid-button" type="submit" value="Place Bid" >
+                            <button class="bid-button" type="submit" id="placeBid" >Place Bid</button>
                             <p class="error-message"
                                th:each="error: ${#fields.errors('value')}"
                                th:text="${error}"></p>

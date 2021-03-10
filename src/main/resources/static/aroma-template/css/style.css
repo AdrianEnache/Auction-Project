@@ -4293,11 +4293,11 @@ a {
 
 .s_product_text p {
     padding-top: 20px;
-    border-top: 1px dotted #eeeeee;
-    border-bottom: 1px dotted #eeeeee;
+    border-top: 5px solid #e9ebee;
+    border-bottom: 5px solid #e9ebee;
     margin-top: 20px;
     padding-bottom: 26px;
-    margin-bottom: 0
+    margin-bottom: 0;
 }
 
 .s_product_text .card_area {
@@ -4359,24 +4359,25 @@ a {
 .product_count {
     display: inline-block;
     position: relative;
-    margin-bottom: 24px
+    margin-bottom: 24px;
+    margin-top: 20px;
 }
 
 .product_count label {
-    font-size: 14px;
+    font-size: 18px;
     color: #777;
     font-weight: normal;
     padding-right: 10px
 }
 
 .product_count input {
-    width: 76px;
+    width: 130px;
     border: 1px solid #eeeeee;
     border-radius: 3px;
     padding-left: 10px
 }
 
-.product_count button {
+.product_count.bid-button{
     display: block;
     border: none;
     background: transparent;
@@ -4390,6 +4391,23 @@ a {
     -moz-transition: all 0.3s ease 0s;
     -o-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s
+}
+
+#placeBid{
+    background-color: #3185ca;
+    border: none;
+    color: white;
+    padding: 15px 49px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+    box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 35px;
+    margin: 0px 0px 33px 20px;
+
 }
 
 .product_count button:hover {
@@ -4408,6 +4426,7 @@ a {
     padding-bottom: 100px;
     margin-top: 60px
 }
+
 
 .product_description_area .nav.nav-tabs {
     background: #f1f6f7;
@@ -4470,6 +4489,8 @@ a {
     padding-top: 20px;
     padding-bottom: 20px
 }
+
+
 
 .product_description_area .tab-content .total_rate .box_total h4 {
     font-size: 48px;

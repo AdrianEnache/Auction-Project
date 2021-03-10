@@ -22,13 +22,10 @@ public interface ProductRepository extends JpaRepository<Product,Integer>, Pagin
     @Query("select p from Product p where :now > p.endBiddingTime and p.winner is null")
     List<Product> findAllExpiredAndUnassigned(@Param("now")LocalDateTime now);
 
+    //ful text search
     @Query(value = "SELECT * FROM product WHERE "
             + "MATCH(name,description) "
             + "AGAINST (?1)",
             nativeQuery = true)
     public List<Product> search(String keyword);
 }
-//"select p from Product p where "
-//        + "match(name, description, category)"
-//        + " against (?1)",
-//        nativeQuery = true

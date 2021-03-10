@@ -84,11 +84,13 @@ public class HomeController {
     public String postBid(Model model, @PathVariable(value = "productId") String productId,
                           BidDto bidDto, BindingResult bindingResult, Authentication authentication) {
         String loggedUserEmail = authentication.getName();
+        UserHeaderDto userHeaderDto =userService.getUserHeaderDto(authentication.getName());
         bidValidator.validate(productId, bidDto, bindingResult);
         Optional<ProductDto> optionalProductDto = productService.getProductDtoBy(productId,authentication.getName());
         if (bindingResult.hasErrors()) {
             model.addAttribute("bidDto",bidDto);
             model.addAttribute("product", optionalProductDto.get());
+            model.addAttribute("userHeaderDto",userHeaderDto);
             return "viewProduct";
         }
         bidService.placeBid(bidDto,productId,loggedUserEmail);

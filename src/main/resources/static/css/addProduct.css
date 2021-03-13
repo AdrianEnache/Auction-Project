@@ -1,0 +1,74 @@
+.page-wrapper.p-b-50.p-t-45.addProduct{
+    background-color: #e9ebee;
+}
+
+.input-group.addProduct{
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    width: 100%;
+}
+
+
+
+.form-control.addProduct{
+    display: block!important;
+    width: 100% !important;
+    height: calc(1.5em + .75rem + 2px) !important;
+    padding: .375rem .75rem!important;
+    font-size: 1rem!important;
+    font-weight: 400!important;
+    line-height: 1.5!important;
+    color: #495057!important;
+    background-color: #fff;
+    background-clip: padding-box!important;
+    border: 1px solid #ced4da!important;
+    border-radius: .25rem!important;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out!important;
+}
+
+#search{
+    margin-top: 8px!important;
+}
+
+.mb-4.bar.addProduct-bar {
+    margin-bottom: 0.5rem !important;
+    margin-top: 0rem !important;
+}
+
+.addProduct-bar {
+    padding: -0.75rem !important;
+}
+
+.rounded {
+    border-radius: 2.25rem !important;
+}
+
+.wrapper.addProduct{
+    margin:130px auto;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.page-wrapper.addProduct-page{
+    background-color: #e9ebee;
+}
+
+.card-heading.addProduct-heading{
+    padding: 20px 0;
+    background: #3185ca;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topright: 10px;
+    border-top-right-radius: 10px;
+}
+
+.btn-primary{
+    font-family: "Open Sans", "Arial", "Helvetica Neue", sans-serif!important;
+}

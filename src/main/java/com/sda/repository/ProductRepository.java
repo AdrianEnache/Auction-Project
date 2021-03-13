@@ -27,5 +27,14 @@ public interface ProductRepository extends JpaRepository<Product,Integer>, Pagin
             + "MATCH(name,description) "
             + "AGAINST (?1)",
             nativeQuery = true)
-    public List<Product> search(String keyword);
+    List<Product> search(String keyword);
+
+    @Query("select distinct b.product from Bid b where :authenticatedUserEmail = b.user.email and :now between b.product.startBiddingTime and b.product.endBiddingTime")
+     List<Product> findAllActiveByBidder(@Param("authenticatedUserEmail") String authenticatedUserEmail,
+                                         @Param("now")LocalDateTime now);
+
+    @Query("select p from Product p where :authenticatedUserEmail = p.winner.email and :now > p.endBiddingTime ")
+    List<Product> findAllExpiredAndAssigned(@Param("authenticatedUserEmail") String authenticatedUserEmail,
+                                            @Param("now")LocalDateTime now);
+
 }

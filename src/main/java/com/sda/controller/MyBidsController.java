@@ -25,12 +25,15 @@ public class MyBidsController {
     }
 
     @GetMapping("/myBids")
-    public String getMyBids(Model model, Authentication authentication){
-        List<ProductDto> productDtoList = productService.getProductDtoListFor(authentication.getName());// this gives us the list of productsDto
-        model.addAttribute("productDtoList", productDtoList);
+    public String getMyBids(Model model, Authentication authentication) {
+//        List<ProductDto> productDtoList = productService.getProductDtoListFor(authentication.getName());// this gives us the list of productsDto
+        List<ProductDto> productActiveBiddingList = productService.getActiveBiddingList(authentication.getName());
+        model.addAttribute("productActiveBiddingList", productActiveBiddingList);
 
-        UserHeaderDto userHeaderDto =userService.getUserHeaderDto(authentication.getName());
-        model.addAttribute("userHeaderDto",userHeaderDto);
+        List<ProductDto> productDtoExpiredAndAssignedList = productService.getExpiredAndAssignedList(authentication.getName());
+        model.addAttribute("productDtoExpiredAndAssignedList",productDtoExpiredAndAssignedList);
+        UserHeaderDto userHeaderDto = userService.getUserHeaderDto(authentication.getName());
+        model.addAttribute("userHeaderDto", userHeaderDto);
 
         return "myBids";
     }

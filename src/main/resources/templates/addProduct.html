@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--Thymeleaf activated-->
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" class="pageClass">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Add Product Page</title>
@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="/aroma-template/css/style.css">
     <link rel="stylesheet" href="css/custom.css">
     <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/addProduct.css">
+    <link href="/colorlib-addProduct/css/main.css" rel="stylesheet" media="all">
 </head>
 <body>
 
@@ -40,8 +42,8 @@
                     <ul class="nav-shop" sec:authorize="isAuthenticated()">
                         <li class="nav-item">
                             <form  th:action="@{/search}" method="get">
-                                <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4 bar">
-                                    <div class="input-group">
+                                <div class="bg-light rounded rounded-pill shadow-sm mb-4 bar addProduct-bar">
+                                    <div class="input-group addProduct-input">
                                         <input type="search" placeholder="Search..." id="search" name="keyword" autocomplete="off" ria-describedby="button-addon1" class="form-control border-0 bg-light">
                                         <div class="input-group-append">
                                             <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
@@ -62,86 +64,93 @@
 
 </header>
 <!--================ End Header Menu Area =================-->
-<div class="mainContainer">
-    <form th:action="@{/addProduct}" method="post" th:object="${productDto}" enctype="multipart/form-data">
-        <!-- Name -->
-        <div class="form-outline mb-4">
-            <div class="form-outline">
-            <label class="form-label" for="name">Name</label>
-            <input type="text" id="name" class="form-control" th:field="*{name}" th:errorclass="form-field-error"/>
-            <p class="error-message"
-               th:each="error: ${#fields.errors('name')}"
-               th:text="${error}"></p>
-            </div>
+<div class="page-wrapper p-b-50 p-t-45 addProduct-page">
+    <div class="wrapper wrapper--w790 addProduct">
+        <div class="card-heading addProduct-heading">
+            <h2 class="title">Product Registration Form</h2>
         </div>
-        <!-- Category -->
-        <div class="form-outline mb-4">
-            <option value="">Please choose...</option>
-            <select id="category" class="form-control" th:field="*{category}">
-                <option th:each="category : ${T(com.sda.model.ProductCategory).values()}"
-                        th:value="${category}"
-                        th:text="${#strings.toLowerCase(category)}">
-                </option>
-            </select>
-            <p class="error-message"
-               th:each="error: ${#fields.errors('category')}"
-               th:text="${error}"></p>
+        <div class="mainContainer">
+            <form th:action="@{/addProduct}" method="post" th:object="${productDto}" enctype="multipart/form-data">
+                <!-- Name -->
+                <div class="form-outline mb-4">
+                    <div class="form-outline">
+                    <label class="form-label" for="name">Name</label>
+                    <input type="text" id="name" class="form-control" th:field="*{name}" th:errorclass="form-field-error"/>
+                    <p class="error-message"
+                       th:each="error: ${#fields.errors('name')}"
+                       th:text="${error}"></p>
+                    </div>
+                </div>
+                <!-- Category -->
+                <div class="form-outline mb-4">
+                    <option value="">Please choose...</option>
+                    <select id="category" class="form-control" th:field="*{category}">
+                        <option th:each="category : ${T(com.sda.model.ProductCategory).values()}"
+                                th:value="${category}"
+                                th:text="${#strings.toLowerCase(category)}">
+                        </option>
+                    </select>
+                    <p class="error-message"
+                       th:each="error: ${#fields.errors('category')}"
+                       th:text="${error}"></p>
+                </div>
+                <!-- Description -->
+                <div class="form-outline mb-4">
+                    <div class="form-outline">
+                        <label class="form-label" for="description">Description</label>
+                        <textarea type="text" id="description" class="form-control" th:field="*{description}"
+                                  th:errorclass="form-field-error"></textarea>
+                        <p class="error-message"
+                           th:each="error: ${#fields.errors('description')}"
+                           th:text="${error}"></p>
+                    </div>
+                </div>
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="startingPrice">Starting Bid</label>
+                    <input type="number" id="startingPrice" class="form-control" th:field="*{startingPrice}"
+                           th:errorclass="form-field-error"/>
+                    <p class="error-message"
+                       th:each="error: ${#fields.errors('startingPrice')}"
+                       th:text="${error}"></p>
+                </div>
+                <!-- Minimum Bid Step input -->
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="minimumBidStep">Minimum Bid Step</label>
+                    <input type="number" id="minimumBidStep" class="form-control" th:field="*{minimumBidStep}"
+                           th:errorclass="form-field-error"/>
+                    <p class="error-message"
+                       th:each="error: ${#fields.errors('minimumBidStep')}"
+                       th:text="${error}"></p>
+                </div>
+                <!-- Start Bidding Time input -->
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="startBiddingTime">Start Bidding Time</label>
+                    <input type="datetime-local" id="startBiddingTime" class="form-control" th:field="*{startBiddingTime}"
+                           th:errorclass="form-field-error"/>
+                    <p class="error-message"
+                       th:each="error: ${#fields.errors('startBiddingTime')}"
+                       th:text="${error}"></p>
+                </div>
+                <!-- End Bidding Time input -->
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="endBiddingTime">End Bidding Time</label>
+                    <input type="datetime-local" id="endBiddingTime" class="form-control" th:field="*{endBiddingTime}"
+                           th:errorclass="form-field-error"/>
+                    <p class="error-message"
+                       th:each="error: ${#fields.errors('endBiddingTime')}"
+                       th:text="${error}"></p>
+                </div>
+                <!-- Image input -->
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="image">Image</label>
+                    <input type="file" id="image" name="image" class="form-control"/>
+                </div>
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block mb-4">Add Product</button>
+            </form>
         </div>
-        <!-- Description -->
-        <div class="form-outline mb-4">
-            <div class="form-outline">
-                <label class="form-label" for="description">Description</label>
-                <textarea type="text" id="description" class="form-control" th:field="*{description}"
-                          th:errorclass="form-field-error"></textarea>
-                <p class="error-message"
-                   th:each="error: ${#fields.errors('description')}"
-                   th:text="${error}"></p>
-            </div>
-        </div>
-        <!-- Email input -->
-        <div class="form-outline mb-4">
-            <label class="form-label" for="startingPrice">Starting Bid</label>
-            <input type="number" id="startingPrice" class="form-control" th:field="*{startingPrice}"
-                   th:errorclass="form-field-error"/>
-            <p class="error-message"
-               th:each="error: ${#fields.errors('startingPrice')}"
-               th:text="${error}"></p>
-        </div>
-        <!-- Minimum Bid Step input -->
-        <div class="form-outline mb-4">
-            <label class="form-label" for="minimumBidStep">Minimum Bid Step</label>
-            <input type="number" id="minimumBidStep" class="form-control" th:field="*{minimumBidStep}"
-                   th:errorclass="form-field-error"/>
-            <p class="error-message"
-               th:each="error: ${#fields.errors('minimumBidStep')}"
-               th:text="${error}"></p>
-        </div>
-        <!-- Start Bidding Time input -->
-        <div class="form-outline mb-4">
-            <label class="form-label" for="startBiddingTime">Start Bidding Time</label>
-            <input type="datetime-local" id="startBiddingTime" class="form-control" th:field="*{startBiddingTime}"
-                   th:errorclass="form-field-error"/>
-            <p class="error-message"
-               th:each="error: ${#fields.errors('startBiddingTime')}"
-               th:text="${error}"></p>
-        </div>
-        <!-- End Bidding Time input -->
-        <div class="form-outline mb-4">
-            <label class="form-label" for="endBiddingTime">End Bidding Time</label>
-            <input type="datetime-local" id="endBiddingTime" class="form-control" th:field="*{endBiddingTime}"
-                   th:errorclass="form-field-error"/>
-            <p class="error-message"
-               th:each="error: ${#fields.errors('endBiddingTime')}"
-               th:text="${error}"></p>
-        </div>
-        <!-- Image input -->
-        <div class="form-outline mb-4">
-            <label class="form-label" for="image">Image</label>
-            <input type="file" id="image" name="image" class="form-control"/>
-        </div>
-        <!-- Submit button -->
-        <button type="submit" class="btn btn-primary btn-block mb-4">Add Product</button>
-    </form>
+    </div>
 </div>
 </body>
 </html>

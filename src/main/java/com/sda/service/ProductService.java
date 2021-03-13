@@ -78,4 +78,14 @@ public class ProductService {
     }
 
 
+    public List<ProductDto> getActiveBiddingList(String authenticatedUserEmail) {
+        List<Product> productList = productRepository.findAllActiveByBidder(authenticatedUserEmail,LocalDateTime.now());
+        return productMapper.map(productList,authenticatedUserEmail);
+    }
+
+
+    public List<ProductDto> getExpiredAndAssignedList(String authenticatedUserEmail) {
+        List<Product> productList = productRepository.findAllExpiredAndAssigned(authenticatedUserEmail,LocalDateTime.now());
+        return productMapper.map(productList,authenticatedUserEmail);
+    }
 }

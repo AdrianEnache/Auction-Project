@@ -1,6 +1,6 @@
 <!DOCTYPE html >
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" class="pageClass">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>View Product</title>
 
@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="/aroma-template/vendors/owl-carousel/owl.carousel.min.css">
     <link rel="stylesheet" href="/aroma-template/css/style.css">
     <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/custom.css">
     <link rel="stylesheet" href="/css/viewProduct.css">
 
 </head>
@@ -101,7 +102,7 @@
                             <input type="text" id="qty" size="2" maxlength="12" class="input-text qty"
                                    th:field="*{value}" >
                             <button class="bid-button" type="submit" id="placeBid" >Place Bid</button>
-                            <p class="error-message"
+                            <p class="error-message viewProduct"
                                th:each="error: ${#fields.errors('value')}"
                                th:text="${error}"></p>
                         </form>

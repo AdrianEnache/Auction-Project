@@ -43,30 +43,30 @@ public class BidValidator {
     }
 
     private void validateBidValue(BidDto bidDto, BindingResult bindingResult, Product product) {
-        if (isBidValueNotNumber(bidDto.getValue())){
+        if (isBidValueNotNumber(bidDto.getValue())) {
             bindingResult.addError(new FieldError("bidDto", "value", "This field should be a number!"));
             return;
         }
 
         Optional<Bid> optionalMaxBid = getMaxBid(product);
-        int productCurrentPrice = product.getStartingPrice();
+        int productStartingPrice = product.getStartingPrice();
         int bidDtoValue = Integer.parseInt(bidDto.getValue());
         int bidStep = product.getMinimumBidStep();
         boolean isError = false;
         String errorMessage = null;
         if (optionalMaxBid.isPresent()) {
-            productCurrentPrice = optionalMaxBid.get().getValue();
+           int productCurrentPrice = optionalMaxBid.get().getValue();
             if (bidDtoValue <= productCurrentPrice) {
                 isError = true;
                 errorMessage = "Value is smaller than the last bid!";
-            }
-        } else if (bidDtoValue < productCurrentPrice){
+            } else if ((bidDtoValue - productCurrentPrice) < bidStep) {
                 isError = true;
-                errorMessage = "Value is smaller than the starting price!";
-
-        }else if((bidDtoValue-productCurrentPrice) < bidStep){
+                errorMessage = "Bid step is smaller than the minimum Bid Step";
+            }
+        } else if (bidDtoValue < productStartingPrice) {
             isError = true;
-            errorMessage = "Bid step is smaller than the minimum Bid Step";
+            errorMessage = "Value is smaller than the starting price!";
+
         }
         if (isError) {
             bindingResult.addError(new FieldError("bidDto", "value", errorMessage));

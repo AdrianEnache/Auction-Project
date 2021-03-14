@@ -67,7 +67,7 @@ public class BidService {
             }
             User winner = optionalMaxBid.get().getUser();
             product.setWinner(winner);
-            System.out.println("Assinging " + winner.getEmail() + " as winner for " + product.getName());
+            System.out.println("Assigning " + winner.getEmail() + " as winner for " + product.getName());
             productRepository.save(product);
 
         }

@@ -23,8 +23,9 @@ public class RegisterController {
         this.userDtoValidator = userDtoValidator;
     }
 
-
-
+    //TODO validare daca e minor   -
+    //TODO DE ADAUGAT MESAJ DE EROARE PAGINA DE BIDS
+    //TODO DE VAZUT SEARCH BAR SA FIE ARANJAT BINE PESTE TOT
     @GetMapping("/register")
     public String getRegisterPage(Model model) {
         model.addAttribute("userDto", new UserDto());

@@ -83,3 +83,7 @@
 #myBtn:hover {
     background-color: #0069d9; /* Add a dark-grey background on hover */
 }
+
+.pageClass{
+    background-color: #e9ebee;
+}

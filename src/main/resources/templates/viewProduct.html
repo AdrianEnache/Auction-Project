@@ -48,7 +48,7 @@
                     <ul class="nav-shop" sec:authorize="isAuthenticated()">
                         <li class="nav-item">
                             <form  th:action="@{/search}" method="get">
-                                <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4 bar">
+                                <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4 bar viewProduct">
                                     <div class="input-group">
                                         <input type="search" placeholder="Search..." id="search" name="keyword" autocomplete="off" ria-describedby="button-addon1" class="form-control border-0 bg-light">
                                         <div class="input-group-append">
@@ -86,8 +86,12 @@
                             <span th:text="' : '+${product.category}"></span></a></li>
                         <li><a href="#"><span>Starting Price</span>
                             <span th:text="' : $'+${product.startingPrice}"></span></a></li>
+                        <li><a href="#"><span>Minimum Bid step at</span>
+                            <span th:text="' : '+${product.minimumBidStep}"></span></a></li>
                         <li><a href="#"><span>Auction ends at</span>
-                            <span th:text="' : '+${product.endBiddingTime}"></span></a></li>
+<!--                            <span th:text="' : '+${product.endBiddingTime}"></span>-->
+                                <span id="clock" class="countdown pt-4"></span>
+                        </a></li>
                         <li sec:authorize="hasRole('PARTICIPANT')"><a href="#"><span>Your maximum bid</span>
                             <span th:text="' : $'+${product.userMaximumBid}"></span></a></li>
                     </ul>
@@ -119,5 +123,24 @@
         </div>
     </div>
 </div>
+
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.countdown.js}"></script>
+
+<script th:inline="javascript">
+        var endDate = [[${#calendars.format(endDate,'yyyy/MM/dd')}]];
+
+        $('#clock').countdown(endDate).on('update.countdown',function (event){
+            var $this = $(this).html(event.strftime(''
+                + '<span class="h1 font-weight-bold">%D</span> Day%!d'
+                + '<span class="h1 font-weight-bold">%H</span> Hr'
+                + '<span class="h1 font-weight-bold">%M</span> Min'
+                + '<span class="h1 font-weight-bold">%S</span> Sec'));
+        })
+</script>
+
+
+
 </body>
 </html>

@@ -95,3 +95,10 @@ select option{
     background-color: #0069d9; /* Add a dark-grey background on hover */
 }
 
+#category{
+    text-transform: capitalize;
+}
+
+.col-lg-6{
+    border: 10px!important;
+}

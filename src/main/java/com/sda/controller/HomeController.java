@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,9 +88,11 @@ public class HomeController {
         UserHeaderDto userHeaderDto =userService.getUserHeaderDto(authentication.getName());
         bidValidator.validate(productId, bidDto, bindingResult);
         Optional<ProductDto> optionalProductDto = productService.getProductDtoBy(productId,authentication.getName());
+        String endBiddingTime = optionalProductDto.get().getEndBiddingTime();
         if (bindingResult.hasErrors()) {
             model.addAttribute("bidDto",bidDto);
             model.addAttribute("product", optionalProductDto.get());
+            model.addAttribute("endDate", new SimpleDateFormat("yyyy-MM-dd").parse(endBiddingTime)); // data de final pt countdown
             model.addAttribute("userHeaderDto",userHeaderDto);
             return "viewProduct";
         }

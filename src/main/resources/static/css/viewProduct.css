@@ -1,6 +1,6 @@
 
 .img-fluid{
-    height: 540px!important;
+    height: auto!important;
     width: 540px!important;
 }
 
@@ -11,4 +11,12 @@
 .error-message.viewProduct{
     border: 0px;
     margin-top: 0px;
+}
+
+.col-lg-6{
+    align-self: center!important;
+}
+
+.rounded.viewProduct{
+    border-radius: 2.25rem!important;
 }

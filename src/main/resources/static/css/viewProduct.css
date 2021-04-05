@@ -20,3 +20,25 @@
 .rounded.viewProduct{
     border-radius: 2.25rem!important;
 }
+
+.container.viewProduct{
+    margin-bottom: 16px;
+}
+
+/*Countound clock*/
+.countdown{
+    font-size: 15px;
+    color: #0464a7!important;
+    font-weight: bold;
+}
+
+.countdown.pt-4{
+    padding-top: 0.5rem!important;
+}
+
+#clockTimer{
+    font-size: 15px;
+    display: contents;
+    padding-top: 0px;
+}
+

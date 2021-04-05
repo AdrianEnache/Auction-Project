@@ -1,3 +1,20 @@
+/*Search Bar*/
+
+.mb-4.bar{
+    margin-bottom: 0.5rem!important;
+    margin-top: 1rem!important;
+}
+
+#search{
+    width: 500px;
+}
+
+.fa-search{
+    color: blue!important;
+}
+
+
+
 .mainContainer{
     width: 600px;
     margin-top: 10px;
@@ -34,15 +51,6 @@ select option{
 }
 
 
-
-/*.img-fluid.main-photo{*/
-/*    max-width: 300px;*/
-/*}*/
-
-.card-img.main-img{
-    width: 300px;
-    height: 300px;
-}
 
 .product-price-btn button, input.bid-button {
     margin: 0 auto;

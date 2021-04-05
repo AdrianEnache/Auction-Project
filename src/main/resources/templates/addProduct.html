@@ -27,11 +27,11 @@
             <a class="navbar-brand " th:href="@{/home}"><img th:src="@{images/logo_simple.png}" alt="User Icon" class="logo"></a>
             <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                 <ul class="nav navbar-nav menu_nav ml-auto mr-auto menu">
-                    <li class="nav-item active"><a class="nav-link" href="/home">Home</a></li>
+                    <li class="nav-item "><a class="nav-link" href="/home">Home</a></li>
                     <li class="nav-item" sec:authorize="hasRole('PARTICIPANT')">
                         <a href="/myBids" class="nav-link">My Bids</a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                    <li class="nav-item active" sec:authorize="hasRole('ADMIN')">
                         <a href="/addProduct" class="nav-link">Add Product</a>
                     </li>
                     <li class="nav-item" sec:authorize="isAnonymous()">

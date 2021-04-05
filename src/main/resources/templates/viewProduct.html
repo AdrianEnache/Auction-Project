@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="/css/custom.css">
     <link rel="stylesheet" href="/css/viewProduct.css">
 
+
 </head>
 <body>
 <!--================ Start Header Menu Area =================-->
@@ -44,7 +45,7 @@
                         <a href="/register" class="nav-link">Register</a>
                     </li>
                 </ul>
-                <div class="container">
+                <div class="container viewProduct">
                     <ul class="nav-shop" sec:authorize="isAuthenticated()">
                         <li class="nav-item">
                             <form  th:action="@{/search}" method="get">
@@ -87,18 +88,15 @@
                         <li><a href="#"><span>Starting Price</span>
                             <span th:text="' : $'+${product.startingPrice}"></span></a></li>
                         <li><a href="#"><span>Minimum Bid step at</span>
-                            <span th:text="' : '+${product.minimumBidStep}"></span></a></li>
+                            <span th:text="' : $'+${product.minimumBidStep}"></span></a></li>
                         <li><a href="#"><span>Auction ends at</span>
-<!--                            <span th:text="' : '+${product.endBiddingTime}"></span>-->
-                                <span id="clock" class="countdown pt-4"></span>
-                        </a></li>
+                            <span th:text="' : '+${product.endBiddingTime}"></span></a></li>
+                        <li><a href="#"><span>Time left </span>
+                            <span id="clock" class="countdown pt-4">: </span></a></li>
                         <li sec:authorize="hasRole('PARTICIPANT')"><a href="#"><span>Your maximum bid</span>
                             <span th:text="' : $'+${product.userMaximumBid}"></span></a></li>
                     </ul>
                     <p th:text="${product.description}"></p>
-<!--                                        <p class="error-message"-->
-<!--                                           th:each="error: ${#fields.errors('generic')}"-->
-<!--                                           th:text="${error}"></p>-->
                     <div class="product_count"
                          th:if="${product.userMaximumBid != product.currentPrice && !product.winnerAssigned}">
                         <form th:action="@{/viewProduct/{id}(id=${product.id})}" method="post" th:object="${bidDto}" sec:authorize="hasRole('PARTICIPANT')">
@@ -124,20 +122,21 @@
     </div>
 </div>
 
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/jquery.countdown.js}"></script>
+<script type="text/javascript" src="/js/jquery.countdown.js"></script>
 
 <script th:inline="javascript">
-        var endDate = [[${#calendars.format(endDate,'yyyy/MM/dd')}]];
+    var endDate = [[${#calendars.format(endDate,'yyyy/MM/dd hh:mm')}]];
 
-        $('#clock').countdown(endDate).on('update.countdown',function (event){
-            var $this = $(this).html(event.strftime(''
-                + '<span class="h1 font-weight-bold">%D</span> Day%!d'
-                + '<span class="h1 font-weight-bold">%H</span> Hr'
-                + '<span class="h1 font-weight-bold">%M</span> Min'
-                + '<span class="h1 font-weight-bold">%S</span> Sec'));
-        })
+    $('#clock').countdown(endDate).on('update.countdown', function (event) {
+        var $this = $(this).html(event.strftime(''
+            + ': <span id="clockTimer" class="h1 font-weight-bold">%D</span> Day%!d'
+            + ' <span id="clockTimer" class="h1 font-weight-bold">%H</span> Hr'
+            + ' <span id="clockTimer" class="h1 font-weight-bold">%M</span> Min'
+            + ' <span id="clockTimer" class="h1 font-weight-bold">%S</span> Sec'));
+    });
 </script>
 
 

@@ -6,22 +6,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsSecurityService userDetailsSecurityService;
 
-//    private final DataSource dataSource;
 
     @Autowired
-    public SecurityConfig(UserDetailsSecurityService userDetailsSecurityService){
+    public SecurityConfig(UserDetailsSecurityService userDetailsSecurityService) {
         this.userDetailsSecurityService = userDetailsSecurityService;
-//        this.dataSource = dataSource;
     }
 
     @Override
@@ -37,6 +37,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/addProduct").hasRole("ADMIN")
                     .anyRequest().authenticated()
                     .and()
+                .rememberMe()//for the moment it doesn't work
+                    .userDetailsService(this.userDetailsSecurityService)
+                    .rememberMeCookieName("remember-me-cookie")
+                    .rememberMeParameter("remember")  // remember-me field name in form.
+                    .tokenValiditySeconds(100000)
+                    .and()
                 .formLogin()
                     .loginPage("/login")
                     .usernameParameter("username")
@@ -44,36 +50,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .defaultSuccessUrl("/home") // will redirect to home page after login
                     .and()
-                .rememberMe()
-                    .key("test")
-//                    .rememberMeCookieName("remember-me-cookie")
-                    .rememberMeParameter("remember_me")  // remember-me field name in form.
-//                    .tokenRepository(this.persistentTokenRepository())
-//                    .tokenValiditySeconds(1*24*60*60)
-                  .and()
                 .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .logoutSuccessUrl("/login")
-                    .deleteCookies("JSESSIONID");
-//                .permitAll()
+                    .permitAll();
+
 
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    public void globalConfig(AuthenticationManagerBuilder auth) throws Exception{
+    public void globalConfig(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsSecurityService).passwordEncoder(bCryptPasswordEncoder());
     }
 
-//    @Bean
-//    public PersistentTokenRepository persistentTokenRepository() {
-//        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
-//        db.setDataSource(dataSource);
-//
-//        return db;
-//    }
 
 }

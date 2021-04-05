@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +32,7 @@ public class HomeController {
     private final BidValidator bidValidator;
     private final BidService bidService;
     private final UserService userService;
+    private static final String USER_HEADER_DTO = "userHeaderDto";
 
     @Autowired
     public HomeController(ProductService productService, GenericValidator genericValidator,
@@ -48,7 +49,7 @@ public class HomeController {
         List<ProductDto> productDtoList = productService.getActiveProductDtoList(authentication.getName());// this gives us the list of productsDto
         model.addAttribute("productDtoList", productDtoList);
         UserHeaderDto userHeaderDto =userService.getUserHeaderDto(authentication.getName());
-        model.addAttribute("userHeaderDto",userHeaderDto);
+        model.addAttribute(USER_HEADER_DTO,userHeaderDto);
         return "home";
     }
 
@@ -58,12 +59,12 @@ public class HomeController {
         List<ProductDto> searchedProductDtoList = productService.search(keyword, authentication.getName());
         UserHeaderDto userHeaderDto =userService.getUserHeaderDto(authentication.getName());
         model.addAttribute("searchResult",searchedProductDtoList);
-        model.addAttribute("userHeaderDto",userHeaderDto);
+        model.addAttribute(USER_HEADER_DTO,userHeaderDto);
         return "search_result";
     }
 
     @GetMapping("/viewProduct/{productId}")
-    public String getViewProduct(Model model, @PathVariable(value = "productId") String productId,Authentication authentication) {
+    public String getViewProduct(Model model, @PathVariable(value = "productId") String productId,Authentication authentication) throws ParseException {
         if (genericValidator.isNotPositiveInteger(productId)) {
             return "redirect:/home";
         }
@@ -75,30 +76,38 @@ public class HomeController {
         model.addAttribute("product", productDto);
         model.addAttribute("bidDto", new BidDto());
 
+        String endBiddingTime = optionalProductDto.get().getEndBiddingTime();
+        model.addAttribute("endDate", productService.getParse(endBiddingTime));
+
         UserHeaderDto userHeaderDto =userService.getUserHeaderDto(authentication.getName());
-        model.addAttribute("userHeaderDto",userHeaderDto);
+        model.addAttribute(USER_HEADER_DTO,userHeaderDto);
 
         return "viewProduct";
     }
 
+
+
     @PostMapping("/viewProduct/{productId}")
     public String postBid(Model model, @PathVariable(value = "productId") String productId,
-                          BidDto bidDto, BindingResult bindingResult, Authentication authentication) {
+                          BidDto bidDto, BindingResult bindingResult, Authentication authentication) throws ParseException {
         String loggedUserEmail = authentication.getName();
         UserHeaderDto userHeaderDto =userService.getUserHeaderDto(authentication.getName());
         bidValidator.validate(productId, bidDto, bindingResult);
         Optional<ProductDto> optionalProductDto = productService.getProductDtoBy(productId,authentication.getName());
         String endBiddingTime = optionalProductDto.get().getEndBiddingTime();
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("bidDto",bidDto);
             model.addAttribute("product", optionalProductDto.get());
-            model.addAttribute("endDate", new SimpleDateFormat("yyyy-MM-dd").parse(endBiddingTime)); // data de final pt countdown
-            model.addAttribute("userHeaderDto",userHeaderDto);
+            model.addAttribute("endDate", productService.getParse(endBiddingTime));
+            model.addAttribute(USER_HEADER_DTO,userHeaderDto);
+
             return "viewProduct";
         }
         bidService.placeBid(bidDto,productId,loggedUserEmail);
         return "redirect:/home";
     }
+
 
 
 }

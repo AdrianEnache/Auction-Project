@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +37,7 @@ public class ProductService {
         Product product = productMapper.map(productDto,multipartFile);
         assignSeller(loggedUserEmail, product);
         productRepository.save(product);
-        //todo - de pus validare pe description sa nu fie prea lunga - pica
+
     }
 
 
@@ -87,5 +90,9 @@ public class ProductService {
     public List<ProductDto> getExpiredAndAssignedList(String authenticatedUserEmail) {
         List<Product> productList = productRepository.findAllExpiredAndAssigned(authenticatedUserEmail,LocalDateTime.now());
         return productMapper.map(productList,authenticatedUserEmail);
+    }
+
+    public Date getParse(String endBiddingTime) throws ParseException {
+        return new SimpleDateFormat("dd-MM-yyyy hh:mm").parse(endBiddingTime);
     }
 }

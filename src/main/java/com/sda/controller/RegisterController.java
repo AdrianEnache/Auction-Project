@@ -23,9 +23,6 @@ public class RegisterController {
         this.userDtoValidator = userDtoValidator;
     }
 
-    //TODO validare daca e minor   -
-    //TODO DE ADAUGAT MESAJ DE EROARE PAGINA DE BIDS
-    //TODO DE VAZUT SEARCH BAR SA FIE ARANJAT BINE PESTE TOT
     @GetMapping("/register")
     public String getRegisterPage(Model model) {
         model.addAttribute("userDto", new UserDto());
@@ -44,7 +41,6 @@ public class RegisterController {
         System.out.println("se apeleaza postRegister cu " + userDto);
         userDtoValidator.validate(userDto,bindingResult);
         if (bindingResult.hasErrors()){
-            //todo - cum pot sa pastrez datele dupa ce primesc eroare
             model.addAttribute("userDto", userDto);
             return "register";
         }

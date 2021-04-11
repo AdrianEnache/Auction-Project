@@ -1,13 +1,14 @@
 package com.sda.service;
 
-import com.sda.dto.UserHeaderDto;
-import com.sda.repository.RoleRepository;
-import com.sda.repository.UserRepository;
 import com.sda.dto.UserDto;
+import com.sda.dto.UserHeaderDto;
 import com.sda.mapper.UserMapper;
 import com.sda.model.Role;
 import com.sda.model.User;
+import com.sda.repository.RoleRepository;
+import com.sda.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,8 @@ public class UserService {
 
 
     @Autowired
-    public UserService(UserMapper userMapper, UserRepository userRepository, RoleRepository roleRepository,BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserService(UserMapper userMapper, UserRepository userRepository, RoleRepository roleRepository,
+                       BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -59,9 +61,10 @@ public class UserService {
 
     public UserHeaderDto getUserHeaderDto(String loggedInUserEmail) {
         Optional<User> optionalUser = userRepository.findByEmail(loggedInUserEmail);
-        if (optionalUser.isPresent()){
+        if (optionalUser.isPresent()) {
             return userMapper.map(optionalUser.get());
         }
         throw new RuntimeException("Invalid user email !");
     }
+
 }

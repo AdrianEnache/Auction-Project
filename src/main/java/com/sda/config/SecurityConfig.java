@@ -9,7 +9,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import javax.sql.DataSource;
 
 
 @Configuration
@@ -18,10 +21,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsSecurityService userDetailsSecurityService;
 
-
     @Autowired
     public SecurityConfig(UserDetailsSecurityService userDetailsSecurityService) {
         this.userDetailsSecurityService = userDetailsSecurityService;
+
     }
 
     @Override
@@ -30,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/register").permitAll()
                     .antMatchers("/images/**").permitAll()
                     .antMatchers("/login").permitAll()
+                    .antMatchers("/home").permitAll()
                     .antMatchers("/css/**").permitAll()
                     .antMatchers("/js/**").permitAll()
                     .antMatchers("/aroma-template/**").permitAll()
@@ -37,18 +41,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/addProduct").hasRole("ADMIN")
                     .anyRequest().authenticated()
                     .and()
-                .rememberMe()//for the moment it doesn't work
-                    .userDetailsService(this.userDetailsSecurityService)
-                    .rememberMeCookieName("remember-me-cookie")
-                    .rememberMeParameter("remember")  // remember-me field name in form.
-                    .tokenValiditySeconds(100000)
-                    .and()
                 .formLogin()
                     .loginPage("/login")
-                    .usernameParameter("username")
-                    .passwordParameter("password")
+                    .defaultSuccessUrl("/home")
                     .permitAll()
-                    .defaultSuccessUrl("/home") // will redirect to home page after login
                     .and()
                 .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -58,14 +54,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    @Autowired
     public void globalConfig(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsSecurityService).passwordEncoder(bCryptPasswordEncoder());
     }
+
+
 
 
 }

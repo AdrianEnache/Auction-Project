@@ -8,6 +8,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 @Configuration
 public class Config {
 
+
     @Bean
     public ITemplateResolver templateResolver() {
         SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();

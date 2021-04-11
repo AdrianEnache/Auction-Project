@@ -1,6 +1,7 @@
 package com.sda.controller;
 
 import com.sda.dto.UserDto;
+import com.sda.model.User;
 import com.sda.service.UserService;
 import com.sda.validator.UserDtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Optional;
 
 @Controller
 public class RegisterController {
@@ -36,6 +39,9 @@ public class RegisterController {
     }
 
 
+
+
+
     @PostMapping("/register")
     public String postRegisterPage(Model model, UserDto userDto, BindingResult bindingResult) {
         System.out.println("se apeleaza postRegister cu " + userDto);
@@ -45,6 +51,6 @@ public class RegisterController {
             return "register";
         }
         userService.register(userDto);
-        return "redirect:/home";
+        return "redirect:/login";
     }
 }

@@ -20,6 +20,7 @@ public class UserMapper {
         return user;
     }
 
+
     public UserHeaderDto map(User user) {
         UserHeaderDto userHeaderDto = new UserHeaderDto();
         userHeaderDto.setFirstName(user.getFirstName());

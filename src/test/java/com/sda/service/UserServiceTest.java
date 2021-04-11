@@ -7,6 +7,7 @@ import com.sda.model.User;
 import com.sda.repository.RoleRepository;
 import com.sda.repository.UserRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
